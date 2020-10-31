@@ -114,6 +114,7 @@ function searchBranches(graph: IGraph): IBranches {
     }
   }
 
+  console.log(branches)
   return branches;
 }
 

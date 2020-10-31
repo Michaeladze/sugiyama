@@ -60,7 +60,7 @@ export const appendFakeNodes = (edges: IEdge[], graph: IGraph, matrix: IMatrix, 
           graph[name].y = y;
           graph[name].parents = [newFromNode];
           graph[name].isProcess = isProcess ? 1 : 0;
-          graph[name].processSibling = isProcess ? 0 : graph[newFromNode].processSibling + 1;
+          graph[name].processSibling = isProcess && graph[newFromNode].x === graph[name].x ? 0 : graph[newFromNode].processSibling + 1;
           graph[name].isFake = 1;
           graph[name].style = {};
 
