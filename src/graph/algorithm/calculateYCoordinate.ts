@@ -52,7 +52,7 @@ function calcConnectedness(processGraph: IGraph, graph: IGraph, data: IGraphData
       }
 
       if (!processGraph[node] && !processGraph[parent]) {
-        graph[node].processSibling = Math.min(graph[node].processSibling, graph[parent].processSibling + 1);
+        graph[node].processSibling = graph[parent].processSibling + 1;
       }
     }
 
@@ -92,7 +92,7 @@ function arrangeNodesByYAxis(process: IGraph, graph: IGraph, data: IGraphData, e
     let relativesCount: number = 0;
 
     [...e[1].children, ...e[1].parents].forEach((node: string) => {
-      if (node !== 'End' && node !== e[0]) {
+      if (node !== endNode && node !== e[0]) {
         accRank += graph[node].y;
         if (graph[node].isProcess || graph[node].y) {
           relativesCount++

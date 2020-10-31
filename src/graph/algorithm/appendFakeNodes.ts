@@ -73,7 +73,8 @@ export const appendFakeNodes = (edges: IEdge[], graph: IGraph, matrix: IMatrix, 
           graph[edge.to].parents = graph[edge.to].parents.filter((node: string) => node !== edge.from);
           graph[edge.to].parents.push(name);
 
-          if (edges[edges.length - 1].from.includes(`${edge.from}${edge.to}`)) {
+
+          if (edges[edges.length - 1].from.includes(`${edge.from}-${edge.to}`)) {
             indexesToRemove.add(edges.length - 1);
           }
 
@@ -103,7 +104,7 @@ export const appendFakeNodes = (edges: IEdge[], graph: IGraph, matrix: IMatrix, 
 };
 
 function fakeNodeName(from: string, to: string, fakeNodesCount: number): string {
-  return `${ from }${ to }${ fakeNodesCount }`;
+  return `${ from }-${ to }-${ fakeNodesCount }`;
 }
 
 function appendToProcess(to: string, node: string, process: string[]) {

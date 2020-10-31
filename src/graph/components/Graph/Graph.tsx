@@ -1,28 +1,30 @@
 import React, { useEffect, useRef } from 'react';
 import './Graph.css';
-import { mock1 } from '../../algorithm/mocks/mock-1';
 import { LayeredGraph } from '../../algorithm';
 import { IEdge, INode } from '../../algorithm/types/graph.types';
+import { useParams } from 'react-router';
 
 interface IProps {
 
 }
 
 const Graph: React.FC<IProps> = () => {
+  // @ts-ignore
+  const { id } = useParams();
 
   const canvas = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
 
-    fetch('http://localhost:4200/graph').then(res => res.json())
+    fetch(`http://localhost:4200/graph/${id}`).then(res => res.json())
       .then(data => {
         console.log(data)
         const graph: LayeredGraph = new LayeredGraph(data);
         graph.init();
 
         if (canvas.current) {
-          canvas.current.width = 5000; // window.innerWidth;
-          canvas.current.height = 5000; // window.innerHeight;
+          canvas.current.width = 10000; // window.innerWidth;
+          canvas.current.height = 10000; // window.innerHeight;
 
           const ctx = canvas.current.getContext('2d');
           const nodes: INode[] = Object.values(graph.graph);
@@ -41,22 +43,22 @@ const Graph: React.FC<IProps> = () => {
             });
 
             nodes.forEach((node: INode) => {
-              if (!node.isFake) {
-                const x = node.style.translate.x + node.style.width / 2;
-                const y = node.style.translate.y + node.style.height / 2;
+              const x = node.style.translate.x + node.style.width / 2;
+              const y = node.style.translate.y + node.style.height / 2;
 
+              if (!node.isFake) {
                 ctx.fillRect(node.style.translate.x, node.style.translate.y, node.style.width, node.style.height);
                 ctx.fillStyle = '#ffffff';
                 ctx.strokeRect(node.style.translate.x, node.style.translate.y, node.style.width, node.style.height);
                 ctx.strokeStyle = '#000000';
-                ctx.strokeText(node.id, x, y);
-                ctx.textAlign = 'center';
               }
+              ctx.strokeText(node.id, x, y);
+              ctx.textAlign = 'center';
             });
           }
         }
       })
-  }, [])
+  }, [id])
 
   return (
     <div className='stage'>

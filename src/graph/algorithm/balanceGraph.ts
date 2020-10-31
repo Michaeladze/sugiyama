@@ -1,6 +1,7 @@
 import { IGraph, IMatrix, IMatrixCell } from './types/graph.types';
 import { IBalance, IBranchEntry, IBranches, IGraphBalance, IMap, IMedianAlignment } from './types/helpers.types';
 import { fillMatrixGaps } from './fillMatrixGaps';
+import { distinctArray } from './helpers/helpers';
 
 export function balanceGraph(process: string[], graph: IGraph, matrix: IMatrix): IBalance {
   const atm: IMedianAlignment = alignToMedian(graph, matrix);
@@ -108,8 +109,8 @@ function searchBranches(graph: IGraph): IBranches {
   };
 
   for (const node in graph) {
-    if (graph.hasOwnProperty(node) && graph[node].processSibling === 1 && !graph[node].isFake && !visitedNodes[node]) {
-      branches[node] = bft(node);
+    if (graph.hasOwnProperty(node) && graph[node].processSibling === 1 && !visitedNodes[node]) {
+      branches[node] = distinctArray(bft(node));
     }
   }
 

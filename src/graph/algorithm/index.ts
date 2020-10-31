@@ -22,19 +22,20 @@ export class LayeredGraph {
   public branches: IBranches = {};
 
   public styles: INodeStyle = {
-    width: 176,
-    height: 46,
+    width: 80,
+    height: 30,
     gap: {
       horizontal: 50,
       vertical: 50
     },
-    fakeWidth: 20
+    fakeWidth: 5
   }
 
   constructor(public data: IGraphData) {
   }
 
   init(): IGraph {
+    console.time();
     /** [1] Create Graph structure */
     this.graph = createGraphStructure(this.data);
 
@@ -72,10 +73,10 @@ export class LayeredGraph {
     /** [10] Move to left while there is empty spot */
     moveToLeft(this.graph);
 
-    console.log(this.matrix);
-    console.log(this.graph);
-    console.log(this.data);
+    console.timeEnd();
 
+    console.log(this.graph)
+    console.log(this.matrix)
     return this.graph;
   }
 }
